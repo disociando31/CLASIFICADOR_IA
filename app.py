@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from tensopiprflow.keras.models import load_model
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import tensorflow as tf 
 import numpy as np
@@ -15,7 +15,7 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'image' not in request.files:
-        return jsonify({'error': 'No image provided'}), 400
+        return render_template('index.html', prediction='No se proporcionó una imagen')
 
     img_file = request.files['image']
     path = os.path.join('static/uploads', img_file.filename)
@@ -27,8 +27,9 @@ def predict():
 
     prediction = model.predict(img_array)[0][0]
     label = 'IA' if prediction > 0.5 else 'Real'
+    confidence = round(float(prediction), 4)
 
-    return jsonify({'prediction': label, 'confidence': float(prediction)})
+    return render_template('index.html', prediction=label, confidence=confidence)
 
 if __name__ == '__main__':
     app.run(debug=True)

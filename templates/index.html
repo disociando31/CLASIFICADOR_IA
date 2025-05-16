@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clasificador de Imágenes IA</title>
+</head>
+<body>
+  <h1>Sube una imagen para clasificar</h1>
+  <form action="/predict" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" accept="image/*" required>
+    <button type="submit">Clasificar</button>
+  </form>
+
+  {% if prediction %}
+    <h2>Resultado: {{ prediction }}</h2>
+    <p>Confianza: {{ confidence }}</p>
+  {% endif %}
+</body>
+</html>
