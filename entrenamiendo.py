@@ -2,7 +2,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# Preprocesamiento de datos
+# Preprocesamiento de daticos
 datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
 
 train_gen = datagen.flow_from_directory(
