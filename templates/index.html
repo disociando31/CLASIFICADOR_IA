@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Clasificador IA</title>
+    <title>Clasificador de Imágenes IA</title>
 </head>
 <body>
-    <h1>Clasificador de Imágenes</h1>
-    <form action="/predict" method="post" enctype="multipart/form-data">
+    <h1>Sube una imagen para clasificarla</h1>
+    <form method="POST" enctype="multipart/form-data">
         <input type="file" name="image" required>
-        <button type="submit">Predecir</button>
+        <input type="submit" value="Clasificar">
     </form>
 
-    {% if prediction %}
-        <h2>{{ prediction }}</h2>
-        <img src="{{ image_path }}" alt="Imagen cargada" width="300">
+    {% if result %}
+        <h2>Resultado: {{ result }}</h2>
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" width="300">
     {% endif %}
 </body>
 </html>
