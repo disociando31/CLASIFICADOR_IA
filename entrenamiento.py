@@ -1,22 +1,23 @@
-# entrenamiento.py
+# entrenamiento_transfer.py
 import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, BatchNormalization
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Dropout
+from tensorflow.keras.optimizers import Adam
 import matplotlib.pyplot as plt
-import os
 
 # Parámetros
-img_size = (128, 128)
+img_size = (224, 224)  # MobileNetV2 requiere mínimo 160x160, ideal 224x224
 batch_size = 32
-epochs = 5
+epochs = 10
 
 # Aumento de datos
 datagen = ImageDataGenerator(
     rescale=1./255,
     validation_split=0.2,
-    rotation_range=10,
-    zoom_range=0.1,
+    rotation_range=15,
+    zoom_range=0.15,
     horizontal_flip=True,
     brightness_range=[0.8, 1.2]
 )
@@ -25,7 +26,7 @@ train_generator = datagen.flow_from_directory(
     'dataset',
     target_size=img_size,
     batch_size=batch_size,
-    class_mode='categorical',  # ahora categórico
+    class_mode='categorical',
     subset='training',
     shuffle=True
 )
@@ -39,47 +40,42 @@ val_generator = datagen.flow_from_directory(
     shuffle=False
 )
 
-print("Etiquetas de clase:", train_generator.class_indices)
-# Ejemplo esperado: {'0_real': 0, '1_fake': 1}
+print("Clases detectadas:", train_generator.class_indices)
 
-# Modelo CNN con softmax (2 salidas)
-model = Sequential([
-    Conv2D(32, (3,3), activation='relu', input_shape=(128, 128, 3)),
-    BatchNormalization(),
-    MaxPooling2D(2,2),
+# Cargar modelo base preentrenado
+base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+base_model.trainable = False  # congelamos la base
 
-    Conv2D(64, (3,3), activation='relu'),
-    BatchNormalization(),
-    MaxPooling2D(2,2),
+# Añadir capas finales
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
+x = Dropout(0.3)(x)
+x = Dense(128, activation='relu')(x)
+x = Dropout(0.3)(x)
+predictions = Dense(2, activation='softmax')(x)
 
-    Conv2D(128, (3,3), activation='relu'),
-    BatchNormalization(),
-    MaxPooling2D(2,2),
+# Modelo final
+model = Model(inputs=base_model.input, outputs=predictions)
 
-    Flatten(),
-    Dense(256, activation='relu'),
-    Dropout(0.5),
-    Dense(2, activation='softmax')  # <- salida de 2 clases
-])
-
+# Compilar
 model.compile(
-    optimizer='adam',
-    loss='categorical_crossentropy',  # <- ajuste por softmax
+    optimizer=Adam(learning_rate=0.0001),
+    loss='categorical_crossentropy',
     metrics=['accuracy']
 )
 
-# Entrenar el modelo
+# Entrenar
 history = model.fit(
     train_generator,
     validation_data=val_generator,
     epochs=epochs
 )
 
-# Guardar el modelo
+# Guardar modelo
 model.save('modelo_clasificador_ia.h5')
-print("Modelo guardado como modelo_clasificador_ia.h5")
+print("✅ Modelo con MobileNetV2 guardado como modelo_clasificador_ia.h5")
 
-# Graficar precisión y pérdida
+# Gráficas
 plt.figure(figsize=(10, 4))
 
 plt.subplot(1, 2, 1)
