@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 # Parámetros
 img_size = (224, 224)  # MobileNetV2 imagen ideal 224x224
 batch_size = 32
-epochs = 8
+epochs = 5
 
 # Aumento de datos
 datagen = ImageDataGenerator(
@@ -68,7 +68,9 @@ model.compile(
 history = model.fit(
     train_generator,
     validation_data=val_generator,
-    epochs=epochs
+    epochs=epochs,
+    steps_per_epoch=600,
+    validation_steps=200
 )
 
 # Guardar modelo
