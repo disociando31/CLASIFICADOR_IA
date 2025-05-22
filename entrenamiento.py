@@ -8,9 +8,9 @@ from tensorflow.keras.optimizers import Adam
 import matplotlib.pyplot as plt
 
 # Parámetros
-img_size = (224, 224)  # MobileNetV2 requiere mínimo 160x160, ideal 224x224
+img_size = (224, 224)  # MobileNetV2 imagen ideal 224x224
 batch_size = 32
-epochs = 10
+epochs = 8
 
 # Aumento de datos
 datagen = ImageDataGenerator(
@@ -73,7 +73,7 @@ history = model.fit(
 
 # Guardar modelo
 model.save('modelo_clasificador_ia.h5')
-print("✅ Modelo con MobileNetV2 guardado como modelo_clasificador_ia.h5")
+print("Modelo con MobileNetV2 guardado como modelo_clasificador_ia.h5")
 
 # Gráficas
 plt.figure(figsize=(10, 4))
