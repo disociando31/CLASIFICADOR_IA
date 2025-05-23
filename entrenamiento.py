@@ -8,7 +8,7 @@ from tensorflow.keras.optimizers import Adam
 import matplotlib.pyplot as plt
 
 # Parámetros
-img_size = (224, 224)  # MobileNetV2 imagen ideal 224x224
+img_size = (224, 224) 
 batch_size = 32
 epochs = 5
 
