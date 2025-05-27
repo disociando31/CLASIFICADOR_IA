@@ -1,9 +1,16 @@
 # === app.py actualizado (compatible con softmax y 2 clases) ===
 from flask import Flask, request, render_template
+from flask import Flask
+from flask import render_template
+>>>>>>> Stashed changes
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
