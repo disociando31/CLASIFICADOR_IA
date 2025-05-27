@@ -1,5 +1,13 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block content %}
-<h2>Objetivos del Proyecto</h2>
-<p>Texto de los objetivos generales y específicos aquí...</p>
+<h2 class="text-primary">Objetivo General</h2>
+<p>Desarrollar un sistema basado en aprendizaje profundo capaz de identificar si una imagen ha sido generada por inteligencia artificial, contribuyendo a la detección de contenido sintético y la promoción de la ética digital.</p>
+
+<h3 class="mt-4 text-secondary">Objetivos Específicos</h3>
+<ul>
+    <li>Aplicar Transfer Learning con MobileNetV2 para el entrenamiento del modelo</li>
+    <li>Diseñar una interfaz web interactiva para la clasificación de imágenes</li>
+    <li>Evaluar el modelo con métricas de precisión y pérdida</li>
+    <li>Implementar la solución con Flask para acceso multiplataforma</li>
+</ul>
 {% endblock %}

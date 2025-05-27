@@ -1,32 +1,23 @@
-<<<<<<< Updated upstream
-# === app.py actualizado (compatible con softmax y 2 clases) ===
 from flask import Flask, request, render_template
-=======
-from flask import Flask
-from flask import render_template
->>>>>>> Stashed changes
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import os
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
-
+# Configuración de Flask
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Cargar el modelo softmax
+# Cargar el modelo entrenado
 model = load_model('modelo_clasificador_ia.h5')
 
-# Verificar extensión permitida
+# Verificar tipo de archivo permitido
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Predecir imagen
+# Función de predicción
 def predict_image(img_path):
     img = image.load_img(img_path, target_size=(224, 224))
     img_array = image.img_to_array(img) / 255.0
@@ -43,9 +34,26 @@ def predict_image(img_path):
     else:
         return "Imagen Real", confidence
 
-# Ruta principal
-@app.route('/', methods=['GET', 'POST'])
+# ===== Rutas Flask =====
+
+# Página principal (Resumen del proyecto y metodología)
+@app.route('/')
 def index():
+    return render_template('index.html')
+
+# Página de objetivos
+@app.route('/objetivos')
+def objetivos():
+    return render_template('objetivos.html')
+
+# Página de planteamiento del problema y justificación
+@app.route('/problema')
+def problema():
+    return render_template('problema.html')
+
+# Página del modelo (carga y predicción de imagen)
+@app.route('/modelo', methods=['GET', 'POST'])
+def modelo():
     result = None
     filename = None
     prediction_value = None
@@ -62,19 +70,8 @@ def index():
         else:
             result = "Archivo no válido. Solo se permiten PNG, JPG o JPEG."
 
-    return render_template('index.html', result=result, filename=filename, value=prediction_value)
+    return render_template('modelo.html', result=result, filename=filename, value=prediction_value)
 
-@app.route('/objetivos')
-def objetivos():
-    return render_template('objetivos.html')
-
-@app.route('/problema')
-def problema():
-    return render_template('problema.html')
-
-@app.route('/modelo')
-def modelo():
-    return render_template('modelo.html')
-
+# Ejecutar la app
 if __name__ == '__main__':
     app.run(debug=True)

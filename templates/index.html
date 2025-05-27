@@ -1,54 +1,14 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Clasificador de Imágenes IA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f4f6f8;
-        }
-        .container {
-            margin-top: 60px;
-            max-width: 600px;
-            text-align: center;
-        }
-        .result-box {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        img {
-            max-width: 100%;
-            margin-top: 20px;
-            border-radius: 8px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2 class="mb-4">Detector de Imágenes Generadas por IA</h2>
-        <form method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-                <input type="file" name="image" accept="image/*" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Clasificar Imagen</button>
-        </form>
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-primary">Resumen del Proyecto</h2>
+<p>Este sistema detecta imágenes generadas por inteligencia artificial utilizando una red neuronal convolucional (CNN) con MobileNetV2. El objetivo es mitigar la desinformación visual y el uso malicioso de deepfakes.</p>
 
-        {% if result %}
-        <div class="result-box mt-4">
-            <h4 class="mb-3">Resultado:</h4>
-            <p class="fw-bold">{{ result }}</p>
-                {% if value %}
-        <p class="text-muted">
-            Nivel de confianza del modelo: <strong>{{ '%.2f'|format(value * 100) }}%</strong>
-        </p>
-    {% endif %}
-            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Imagen cargada">
-        </div>
-        {% endif %}
-    </div>
-</body>
-</html>
+<h3 class="mt-4 text-secondary">Metodología</h3>
+<ul>
+    <li>Recopilación de datos confiables (dataset Kamblee)</li>
+    <li>Preprocesamiento y aumento de datos</li>
+    <li>Entrenamiento con Transfer Learning (MobileNetV2)</li>
+    <li>Evaluación con métricas de precisión y pérdida</li>
+    <li>Integración en una aplicación web con Flask</li>
+</ul>
+{% endblock %}

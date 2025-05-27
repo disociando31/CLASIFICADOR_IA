@@ -1,5 +1,28 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block content %}
-<h2>Ingeniería del Modelo</h2>
-<p>Descripción técnica de la arquitectura CNN, uso de Keras, procesamiento de datos, etc.</p>
+<h2 class="text-success">Detector de Imágenes IA</h2>
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" accept="image/*" class="form-control mb-3" required>
+    <button type="submit" class="btn btn-success">Clasificar Imagen</button>
+</form>
+
+{% if result %}
+<div class="card mt-4 p-3">
+    <h4>Resultado:</h4>
+    <p><strong>{{ result }}</strong> (Confianza: {{ (value * 100) | round(2) }}%)</p>
+    <img src="{{ url_for('static', filename='uploads/' + filename) }}" class="img-fluid rounded">
+</div>
+{% endif %}
+
+<h3 class="mt-5">Parámetros del modelo</h3>
+<ul>
+    <li>Modelo base: MobileNetV2</li>
+    <li>Tamaño de imagen: 224x224</li>
+    <li>Épocas: 5</li>
+    <li>Batch size: 32</li>
+    <li>Optimización: Adam (lr = 0.0001)</li>
+</ul>
+
+<h3 class="mt-4">Gráficas de Entrenamiento</h3>
+<img src="{{ url_for('static', filename='graficas/precision.png') }}" class="img-fluid mb-2">
 {% endblock %}
