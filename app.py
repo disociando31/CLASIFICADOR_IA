@@ -1,5 +1,7 @@
+<<<<<<< Updated upstream
 # === app.py actualizado (compatible con softmax y 2 clases) ===
 from flask import Flask, request, render_template
+=======
 from flask import Flask
 from flask import render_template
 >>>>>>> Stashed changes
