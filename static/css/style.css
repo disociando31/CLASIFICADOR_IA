@@ -1,43 +1,14 @@
 body {
-    background-color: #f4f6f8;
+    background-color: #f8f9fa;
     font-family: 'Segoe UI', sans-serif;
 }
-
-.navbar {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+.navbar-brand {
+    font-weight: bold;
 }
-
-h2 {
-    color: #212529;
-    font-weight: 600;
-    margin-bottom: 20px;
+.card {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
-
-.container {
-    max-width: 800px;
-    padding-top: 40px;
-}
-
-.result-box {
-    margin-top: 30px;
-    padding: 25px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.result-box p {
-    font-size: 1.1rem;
-}
-
-button.btn-primary {
-    padding: 10px 20px;
-    font-size: 1rem;
-}
-
 footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
+    font-size: 0.9rem;
     color: #888;
 }
